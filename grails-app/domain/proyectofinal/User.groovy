@@ -10,15 +10,17 @@ class User {
     boolean accountExpired
     boolean accountLocked
     boolean passwordExpired
+    boolean enabled = true
 
     static hasMany = [ authorities: UserRole, sales: Sale ]
 
     transient springSecurityService
 
     static constraints = {
-        username blank: false, unique: true
-        password size: 5..15
         complete_name blank: false
+        password blank: false, password: true
+        username blank: false, unique: true
+        email blank: false, unique: true
     }
 
     Set<Role> getAuthorities() {
@@ -41,9 +43,10 @@ class User {
                 password
     }
 
+    static transients = ['springSecurityService']
+
     static mapping = {
         password column: '`password`'
     }
 
-    static transients = ['springSecurityService']
 }

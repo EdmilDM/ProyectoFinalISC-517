@@ -1,8 +1,10 @@
 package proyectofinal
 
 import grails.gorm.DetachedCriteria
+import groovy.transform.ToString
 import org.apache.commons.lang.builder.HashCodeBuilder
 
+@ToString(cache=true, includeNames=true, includePackage=false)
 class UserRole implements Serializable {
     User user
     Role role
@@ -38,7 +40,9 @@ class UserRole implements Serializable {
     }
 
     static UserRole create( User user, Role role ) {
-        new UserRole( user: user, role: role ).save( )
+        def instance = new UserRole( user: user, role: role )
+        instance.save( )
+        instance
     }
 
     static boolean remove( User u, Role r ) {

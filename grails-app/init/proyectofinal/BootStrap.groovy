@@ -4,27 +4,18 @@ class BootStrap {
 
     def init = { servletContext ->
 
-        def adminUser = User.findByUsername( 'Admin' )
+        User adminUser = new User(username: 'admin',
+                        password: '12345', email: 'admin@local', complete_name: 'Super Administrator').save( failOnError: true, flush: true  )
 
-        if( adminUser == null ) {
-            adminUser = new User( username: 'Admin',
-                    password: '1234', email: 'admin@local' ).save()
-        }
+        System.out.println("ADMIN CREADO!" + adminUser.username );
 
-        def adminRole = Role.findByAuthority( 'ROLE_ADMIN' );
 
-        if( adminRole == null ){
-            adminRole = new Role(
-                    authority: 'ROLE_ADMIN')
+        Role adminRole = new Role( authority: 'ROLE_ADMIN' )
 
-            UserRole.create ( adminUser, adminRole )
-        }
+        UserRole.create adminUser, adminRole
 
-        if( adminRole == null ) {
-            def userRole = new Role(
-                    authority: 'ROLE_USER')
-            UserRole.create ( adminUser, userRole )
-        }
+        Role userRole = new Role( authority: 'ROLE_USER' )
+        UserRole.create adminUser, userRole
     }
 
     def destroy = {

@@ -7,8 +7,8 @@ class Sale {
     Double total
     boolean given
 
-    static belongsTo = [ user: User ]
-    static hasMany = [ items: SaleItem ]
+    static belongsTo = [ User ]
+    static hasMany = [ SaleItem ]
 
     static constraints = {
         total min: 0
