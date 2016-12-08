@@ -41,7 +41,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="/" class="logo">
             <span class="logo-mini"><b>M</b>Z</span>
             <span class="logo-lg"><b>Mini</b>ZONE</span>
         </a>
@@ -80,7 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="/logout" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -101,17 +101,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Optionally, you can add icons to the links -->
                 <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
                 <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+                <sec:ifAnyGranted roles="ROLE_ADMIN">
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+                    <a href="#"><i class="fa fa-link"></i> <span>User Actions</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#">Link in level 2</a></li>
-                        <li><a href="#">Link in level 2</a></li>
+                            <li><a href="/user/index">List</a></li>
+                            <li><a href="/user/create">Create</a></li>
                     </ul>
                 </li>
+                </sec:ifAnyGranted>
+                <sec:ifAnyGranted roles="ROLE_ADMIN">
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-link"></i> <span>Roles Actions</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/userRole/index">List</a></li>
+                            <li><a href="/userRole/create">Create</a></li>
+                        </ul>
+                    </li>
+                </sec:ifAnyGranted>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
