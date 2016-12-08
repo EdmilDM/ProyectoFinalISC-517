@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main" />
-    <title>CalendarIO</title>
+    <title>MiniZone</title>
 </head>
 <body>
 

@@ -22,8 +22,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect.
   -->
+
+    <asset:stylesheet src="application.css"/>
     <asset:stylesheet src="skin-black.min.css"/>
     <asset:stylesheet src="general.css"/>
+    <asset:javascript src="application.js" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -141,16 +144,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </div>
 <!-- ./wrapper -->
 
-<!-- REQUIRED JS SCRIPTS -->
-
-<!-- jQuery 2.2.3 -->
-<asset:javascript src="jquery-2.2.0.min.js"/>
-<!-- Bootstrap 3.3.6 -->
-<asset:javascript src="bootstrap.js"/>
 <!-- AdminLTE App -->
 <asset:javascript src="app.min.js"/>
-
 <asset:javascript src="general.js"/>
-
 </body>
 </html>
