@@ -1,12 +1,9 @@
 package proyectofinal
 
-import com.paypal.base.Constants
 import com.paypal.api.payments.Links
+import com.paypal.base.Constants
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
-
-import static org.springframework.http.HttpStatus.CREATED
-import static org.springframework.http.HttpStatus.OK
 import groovy.json.JsonSlurper
 
 @Secured( [ "ROLE_USER" ] )
@@ -169,51 +166,34 @@ class ProductsController {
     }
 
     @Transactional
-    def update(Product product) {
+    def update() {
+        Product product = Product.findById( params.id )
         if (product == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (product.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond user.errors, view:'edit'
-            return
-        }
+        product.name = params.name
+        product.price = Double.parseDouble( params.price )
+        product.image = params.image
+        product.quantity_available = Integer.parseInt( params.quantity_available )
+        product.description = params.description
 
         product.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'product.label', default: 'User'), user.id])
-                redirect index()
-            }
-            '*'{ respond product, [status: OK] }
-        }
+        redirect url: "/products/edit/" + product.id
     }
 
     @Transactional
-    def save(Product product) {
-        if (product == null) {
-                transactionStatus.setRollbackOnly()
-                notFound()
-                return
-            }
-
-        if (product.hasErrors()) {
-                transactionStatus.setRollbackOnly()
-                respond product.errors, view:'create'
-                return
-        }
+    def save() {
+        Product product = new Product( )
+        product.name = params.name
+        product.price = Double.parseDouble( params.price )
+        product.image = params.image
+        product.quantity_available = Integer.parseInt( params.quantity_available )
+        product.description = params.description
 
         product.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                redirect index()
-            }
-            '*' { respond product, [status: CREATED] }
-        }
+        redirect url: "/products/edit/" + product.id
     }
 }

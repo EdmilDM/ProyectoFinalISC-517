@@ -167,11 +167,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
+<script>
+    UPLOADCARE_PUBLIC_KEY = '4c4ddfa7499a852684a1';
+</script>
 <!-- AdminLTE App -->
 <asset:javascript src="bootstrap.js"/>
 <asset:javascript src="app.min.js"/>
 <asset:javascript src="pnotify.custom.js" />
 <asset:javascript src="general.js"/>
+<script src="https://ucarecdn.com/widget/2.10.2/uploadcare/uploadcare.min.js" charset="utf-8"></script>
+<script>
+    $(document).ready( function( ){
+        widget.onUploadComplete(function(info) {
+            console.log( info );
+            alert('A');
+        });
+    } );
+</script>
 </body>
 </html>

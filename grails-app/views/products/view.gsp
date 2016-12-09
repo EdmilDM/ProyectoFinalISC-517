@@ -31,6 +31,7 @@
                     <h3 class="box-title">Agregar a carrito</h3>
                 </div>
                 <div class="box-body">
+                    <img src="${product.image}" style="width: 100%; float: left;" />
                     <label>Quantity</label>
                     <input class="form-control" min="0" step="1" type="number" placeholder="How many do you want?" id="product_qty" />
                     <button style="margin-top:10px;" type="button" id="add_to_cart" rel="${product.id}" class="btn btn-success"><i class="fa fa-shopping-cart"></i> Add to cart</button>

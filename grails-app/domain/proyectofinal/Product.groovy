@@ -6,8 +6,7 @@ class Product {
     String description
     Integer quantity_available
     Double price
-    ArrayList< String > Images
-    ArrayList< String > Features
+    String image
 
     static hasMany = [ saleItem: SaleItem ]
 

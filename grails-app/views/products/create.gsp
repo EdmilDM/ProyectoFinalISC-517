@@ -2,37 +2,44 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'product.label', default: 'Product')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#create-product" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-            </ul>
-        </div>
-        <div id="create-product" class="content scaffold-create" role="main">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${this.product}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.product}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
-            </g:hasErrors>
-            <g:form action="save">
-                <fieldset class="form">
-                    <f:all bean="product"/>
-                </fieldset>
-                <fieldset class="buttons">
-                    <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-                </fieldset>
-            </g:form>
-        </div>
+    <div class="row">
+        <form action="/products/save" method="post">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" name="name" value=""/>
+                </div>
+
+                <div class="form-group">
+                    <label>Price</label>
+                    <input class="form-control" name="price" step="0.01" type="number" min="0" value=""/>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity Available</label>
+                    <input class="form-control" name="quantity_available" min="0" value=""/>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" name="description"></textarea>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box box-solid box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Picture</h3>
+                    </div>
+                    <div class="box-body">
+                        <input type="hidden" data-tabs="url file" value="" name="image" id="product_image" role="uploadcare-uploader" />
+                    </div>
+                </div>
+                <button type="submit" name="save" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+            </div>
+        </form>
+    </div>
     </body>
 </html>

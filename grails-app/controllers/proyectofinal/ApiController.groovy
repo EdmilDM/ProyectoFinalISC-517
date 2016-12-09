@@ -8,7 +8,9 @@ class ApiController {
     }
 
     def list_pending_orders = {
-        [ items: Sale.findByGiven( false ) ]
+        def given = [ : ]
+        given[ 'items' ] = Sale.findByGiven( false )
+        return given as JSON
     }
 
     def mark_as_given ( int id ){
@@ -25,7 +27,7 @@ class ApiController {
         }
 
         result[ 'status' ] = 'success';
-        result[ 'message' ] = 'Marked as done!';
+        result[ 'message' ] = 'Marked as given!';
         render result as JSON
     }
 }
