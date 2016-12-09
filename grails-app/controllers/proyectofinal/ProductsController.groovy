@@ -83,7 +83,7 @@ class ProductsController {
         def transactions = [transaction]
 
         def payer = paypalService.createPayer(paymentMethod: 'paypal')
-        def cancelUrl = "http://localhost:8080/products/cancel_paymanet"
+        def cancelUrl = "http://localhost:8080/products/cancel_payment?sale=" + sale.id
         def returnUrl = "http://localhost:8080/products/execute_payment?sale=" + sale.id
 
         def redirectUrls = paypalService.createRedirectUrls(cancelUrl: cancelUrl, returnUrl: returnUrl)

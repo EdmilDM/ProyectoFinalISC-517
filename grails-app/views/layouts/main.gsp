@@ -114,14 +114,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
                 <sec:ifAnyGranted roles="ROLE_ADMIN">
                     <li class="treeview">
+                        <a href="/charts"><i class="fa fa-bar-chart"></i> <span>Charts</span></a>
+                    </li>
+                    <li class="treeview">
                         <a href="#"><i class="fa fa-user"></i> <span>User Actions</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                                <li><a href="/user/index"><i class="fa fa-list"></i> List</a></li>
-                                <li><a href="/user/create"><i class="fa fa-user-plus"></i> Create</a></li>
+                            <li><a href="/user/index"><i class="fa fa-list"></i> List</a></li>
+                            <li><a href="/user/create"><i class="fa fa-user-plus"></i> Create</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -176,13 +179,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <asset:javascript src="pnotify.custom.js" />
 <asset:javascript src="general.js"/>
 <script src="https://ucarecdn.com/widget/2.10.2/uploadcare/uploadcare.min.js" charset="utf-8"></script>
-<script>
-    $(document).ready( function( ){
-        widget.onUploadComplete(function(info) {
-            console.log( info );
-            alert('A');
-        });
-    } );
-</script>
+
 </body>
 </html>
