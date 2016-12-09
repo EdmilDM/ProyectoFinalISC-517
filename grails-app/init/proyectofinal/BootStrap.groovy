@@ -4,7 +4,9 @@ class BootStrap {
 
     def init = { servletContext ->
 
-        User adminUser = new User(username: 'admin',
+        Cart cart = new Cart( )
+        cart.save( )
+        User adminUser = new User(username: 'admin', cart: cart,
                         password: '12345', email: 'admin@local', complete_name: 'Super Administrator').save( failOnError: true, flush: true  )
 
 

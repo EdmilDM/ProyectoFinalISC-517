@@ -13,7 +13,7 @@ class User {
     boolean enabled = true
 
     static hasMany = [ authorities: UserRole, sales: Sale ]
-    static hasOne = [ Cart ]
+    static hasOne = [ cart: Cart ]
 
     transient springSecurityService
 

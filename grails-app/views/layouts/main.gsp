@@ -77,7 +77,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        <a href="/products/cart" class="btn btn-default btn-flat"><i class="fa fa-shopping-cart"></i> Shopping Cart</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="/logout" class="btn btn-default btn-flat">Sign out</a>
@@ -99,31 +99,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
                 <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-                <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-                <sec:ifAnyGranted roles="ROLE_ADMIN">
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-link"></i> <span>User Actions</span>
+                    <a href="#"><i class="fa fa-shopping-bag"></i> <span>Products</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                            <li><a href="/user/index">List</a></li>
-                            <li><a href="/user/create">Create</a></li>
+                        <li><a href="/products"><i class="fa fa-list"></i> List</a></li>
+                        <sec:ifAnyGranted roles="ROLE_ADMIN">
+                        <li><a href="/products/create"><i class="fa fa-plus"></i> Create</a></li>
+                        </sec:ifAnyGranted>
                     </ul>
                 </li>
-                </sec:ifAnyGranted>
                 <sec:ifAnyGranted roles="ROLE_ADMIN">
                     <li class="treeview">
-                        <a href="#"><i class="fa fa-link"></i> <span>Roles Actions</span>
+                        <a href="#"><i class="fa fa-user"></i> <span>User Actions</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/userRole/index">List</a></li>
-                            <li><a href="/userRole/create">Create</a></li>
+                                <li><a href="/user/index"><i class="fa fa-list"></i> List</a></li>
+                                <li><a href="/user/create"><i class="fa fa-user-plus"></i> Create</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-cog"></i> <span>Roles Actions</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/userRole/index"><i class="fa fa-list"></i> List</a></li>
+                            <li><a href="/userRole/create"><i class="fa fa-plus"></i> Create</a></li>
                         </ul>
                     </li>
                 </sec:ifAnyGranted>
@@ -160,7 +169,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 <!-- AdminLTE App -->
+<asset:javascript src="bootstrap.js"/>
 <asset:javascript src="app.min.js"/>
+<asset:javascript src="pnotify.custom.js" />
 <asset:javascript src="general.js"/>
 </body>
 </html>

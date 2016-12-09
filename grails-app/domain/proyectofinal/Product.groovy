@@ -4,11 +4,12 @@ class Product {
 
     String name
     String description
-    int quantity_available
+    Integer quantity_available
     Double price
     ArrayList< String > Images
+    ArrayList< String > Features
 
-    static hasMany = [ SaleItem ]
+    static hasMany = [ saleItem: SaleItem ]
 
     static constraints = {
         name blank: false

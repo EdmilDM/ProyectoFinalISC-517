@@ -1,8 +1,8 @@
 package proyectofinal
 
 class Cart {
-    static belongsTo = [ User ]
-    static hasMany = [ CartItem ]
+    static belongsTo = [ user: User ]
+    static hasMany = [ cartItems: CartItem ]
 
     static constraints = {
     }
