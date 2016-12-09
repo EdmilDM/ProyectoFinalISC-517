@@ -11,6 +11,6 @@ class Sale {
     static hasMany = [ SaleItem ]
 
     static constraints = {
-        total min: 0
+        total min: 0.0
     }
 }
