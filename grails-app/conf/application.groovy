@@ -32,3 +32,9 @@ grails.plugin.springsecurity.rejectIfNoRule = false
 grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 
 grails.plugin.springsecurity.logout.postOnly = false
+
+//PAYPAL STUFF
+paypal.email="test@servidoresactivos.com"
+paypal.sandbox.clientId = 'AfSGojq0W8kM7ABw-gKQmFK8syX8WbyR9PuCA5qmo_yQyKkWYWpMrMkmosAYG6zoZ9Dir5hJdcd8DO3q'
+paypal.sandbox.clientSecret = 'EKrCz9NSMVACbzyOs5hVuH4ozfnBBiEhO6caQFZNTJu7to5dgkFjaJLyAx6i5cxRaM097Hf8Omp4bF-Q'
+paypal.sandbox.endpoint = "https://api.sandbox.paypal.com"

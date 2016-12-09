@@ -1,8 +1,7 @@
 package proyectofinal
 
 class Sale {
-
-    String paypal_transaction_id
+    String paypal_transaction_id = ""
     String NCF
     Double total
     boolean given
@@ -14,6 +13,6 @@ class Sale {
     static hasMany = [ items: SaleItem ]
 
     static constraints = {
-        total min: 0.0
+        total blank: false
     }
 }

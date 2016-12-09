@@ -7,7 +7,7 @@ $( document ).ready( function( ) {
         alert( message + ' -> ' + status );
     }
 
-    $( '.delete_cart_item').click( function( ) {
+    $( '.delete_cart_item' ).click( function( ) {
         var id = $( this ).attr( 'rel' );
 
         $.ajax( {

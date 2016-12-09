@@ -15,8 +15,8 @@
                 Transactions:
                 <g:if test="${current_user.id == user.id || current_user.isAdmin( ) }">
                     <g:if test="${user.sales.size() > 0}">
-                    <exa:datatable id="transactions_datatable" items="${user.sales?user.sales:[]}" class="table table-stripped" style="background: #FFF;"
-                        hidden="description, hasMany, images, saleItem, Features, dateCreated"
+                    <exa:datatable id="transactions_datatable" items="${user.sales}" class="table table-stripped" style="background: #FFF;"
+                        hidden="lastUpdated, hasMany, user, items, belongsTo"
                         reorder="id, NCF, paypal_transaction_id, total"
                         add="actions"
                     >
@@ -26,11 +26,8 @@
                         <exa:customHeader name="total" value="Total"/>
                         <exa:customHeader name="actions" value="Actions"/>
                         <exa:customColumn name="actions">
-                            <a href="/report/invoice/${it.id}"><i class="fa fa-wpforms "></i> Print invoice</a>
-                            <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_STORAGE">
-                                <a href="/report/storage/${it.id}"><i class="fa fa-wpforms "></i> Print Storage document</a>
-                                <a href="/products/sale/${it.id}"><i class="fa fa-wpforms "></i> Print Storage document</a>
-                            </sec:ifAnyGranted>
+                            <a class="btn btn-block btn-xs btn-primary" href="/products/sale/${it.id}"><i class="fa fa-eye "></i> View sale</a>
+
                         </exa:customColumn>
                     </exa:datatable>
                     </g:if>

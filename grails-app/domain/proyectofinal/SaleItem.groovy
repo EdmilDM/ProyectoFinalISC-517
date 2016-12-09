@@ -8,6 +8,6 @@ class SaleItem {
     static belongsTo = [ sale: Sale, product: Product ]
 
     static constraints = {
-        total min: 0
+        total blank: false
     }
 }

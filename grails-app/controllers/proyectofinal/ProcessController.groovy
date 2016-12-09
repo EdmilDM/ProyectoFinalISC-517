@@ -37,13 +37,17 @@ class ProcessController {
 
         User current_user = springSecurityService.currentUser
         def cartItem = CartItem.findById( id )
+        def product = Product.findById( cartItem.product.id )
+
+        product.quantity_available += cartItem.quantity;
 
         def result = [ : ]
 
-        if( cartItem.delete( ) ){
+        if( !cartItem.delete( ) ){
             result[ 'status' ] = 'error'
             result[ 'message' ] = "The cart wasn't updated!"
             render result as JSON
+
         }
 
         result[ 'status' ] = 'success'

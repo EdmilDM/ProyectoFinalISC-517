@@ -61,4 +61,13 @@ class User {
         return this.authorities.contains( Role.findByAuthority( "ROLE_ADMIN" ) )
     }
 
+    def hasRole( List< String > Roles ){
+        for( String role : Roles ){
+            Role r = Role.findByAuthority( role );
+            if( r != null )
+                if( this.authorities.contains( r ) ) return true
+        }
+        return false;
+    }
+
 }
