@@ -9,8 +9,10 @@ import grails.transaction.Transactional
 @Secured( [ "ROLE_USER" ] )
 class UserController {
 
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     def springSecurityService
+
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -48,6 +50,12 @@ class UserController {
         }
 
         user.save flush:true
+        sendMail {
+            to user.email
+            text "Username = " + user.username + "\t Password: " + user.password
+            subject " Confirmation"
+        }
+        println("Email? mandado")
 
         request.withFormat {
             form multipartForm {

@@ -142,10 +142,16 @@ class ProductsController {
         Sale sale = Sale.findById( params.sale );
         sale.paypal_transaction_id = params.paymentId;
         sale.save( );
+        sendMail {
+            to springSecurityService.currentUser.email
+            text "test"
+            subject "FacturaPDF"
+        }
         System.out.println( map );
 
 //        redirect url: "localhost:8080/products/sale/" + sale.id
         [ sale: sale ]
+
     }
 
     def cancel_paymanet = {
