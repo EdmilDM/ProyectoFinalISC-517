@@ -70,9 +70,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <p>
+                                    <a href="/user/profile/?username=${sec.username()}">
                                         ${sec.username()}
-                                    </p>
+                                    </a>
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">

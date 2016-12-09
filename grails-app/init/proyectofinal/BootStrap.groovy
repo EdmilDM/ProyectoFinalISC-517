@@ -11,11 +11,13 @@ class BootStrap {
 
 
         Role adminRole = new Role( authority: 'ROLE_ADMIN' )
-
         UserRole.create adminUser, adminRole
 
         Role userRole = new Role( authority: 'ROLE_USER' )
         UserRole.create adminUser, userRole
+
+        Role storageRole = new Role( authority: 'ROLE_STORAGE' )
+        storageRole.save( )
 
         Product p1 = new Product( name: 'Sopa', quantity_available: 10, price: 10, description: '1' );
         Product p2 = new Product( name: 'Recao', quantity_available: 5, price: 3, description: '1' );

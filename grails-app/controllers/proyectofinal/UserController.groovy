@@ -9,10 +9,19 @@ import grails.transaction.Transactional
 class UserController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    def springSecurityService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond User.list(params), model:[userCount: User.count()]
+    }
+
+    def profile( String username ) {
+        System.out.println( username );
+        User current_user = springSecurityService.currentUser
+        User user = User.findByUsername( username );
+
+        [ user: user, current_user: current_user ]
     }
 
     def show(User user) {

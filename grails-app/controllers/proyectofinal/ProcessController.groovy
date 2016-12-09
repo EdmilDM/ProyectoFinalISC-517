@@ -33,6 +33,25 @@ class ProcessController {
         render result as JSON
     }
 
+    def delete_from_cart( Integer id ){
+
+        User current_user = springSecurityService.currentUser
+        def cartItem = CartItem.findById( id )
+
+        def result = [ : ]
+
+        if( cartItem.delete( ) ){
+            result[ 'status' ] = 'error'
+            result[ 'message' ] = "The cart wasn't updated!"
+            render result as JSON
+        }
+
+        result[ 'status' ] = 'success'
+        result[ 'message' ] = "Cart updated!"
+
+        render result as JSON
+    }
+
     def search( String q ){
         def lista = Contacto.findAllByEmailLikeOrNombreLike( q, q )
         if ( lista == null ) lista = []

@@ -50,4 +50,8 @@ class User {
         password column: '`password`'
     }
 
+    def isAdmin( ){
+        return this.authorities.contains( Role.findByAuthority( "ROLE_ADMIN" ) )
+    }
+
 }
