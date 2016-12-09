@@ -23,12 +23,4 @@ class ProductsController {
         Product product = Product.get( params.id )
         [ product: product ]
     }
-
-    @Secured( [ "ROLE_USER", "ROLE_STORAGE" ] )
-    def sale( int id ){
-        def sale = Sale.findById( id )
-
-        [ sale: sale ]
-    }
-
 }

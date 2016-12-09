@@ -3,9 +3,9 @@ package proyectofinal
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(UserRoleController)
-@Mock(UserRole)
-class UserRoleControllerSpec extends Specification {
+@TestFor(ProductController)
+@Mock(Product)
+class ProductControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class UserRoleControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.userRoleList
-            model.userRoleCount == 0
+            !model.productList
+            model.productCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,7 +30,7 @@ class UserRoleControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.userRole!= null
+            model.product!= null
     }
 
     void "Test the save action correctly persists an instance"() {
@@ -38,25 +38,25 @@ class UserRoleControllerSpec extends Specification {
         when:"The save action is executed with an invalid instance"
             request.contentType = FORM_CONTENT_TYPE
             request.method = 'POST'
-            def userRole = new UserRole()
-            userRole.validate()
-            controller.save(userRole)
+            def product = new Product()
+            product.validate()
+            controller.save(product)
 
         then:"The create view is rendered again with the correct model"
-            model.userRole!= null
+            model.product!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            userRole = new UserRole(params)
+            product = new Product(params)
 
-            controller.save(userRole)
+            controller.save(product)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/userRole/show/1'
+            response.redirectedUrl == '/product/show/1'
             controller.flash.message != null
-            UserRole.count() == 1
+            Product.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -68,11 +68,11 @@ class UserRoleControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def userRole = new UserRole(params)
-            controller.show(userRole)
+            def product = new Product(params)
+            controller.show(product)
 
         then:"A model is populated containing the domain instance"
-            model.userRole == userRole
+            model.product == product
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -84,11 +84,11 @@ class UserRoleControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def userRole = new UserRole(params)
-            controller.edit(userRole)
+            def product = new Product(params)
+            controller.edit(product)
 
         then:"A model is populated containing the domain instance"
-            model.userRole == userRole
+            model.product == product
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -98,28 +98,28 @@ class UserRoleControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/userRole/index'
+            response.redirectedUrl == '/product/index'
             flash.message != null
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def userRole = new UserRole()
-            userRole.validate()
-            controller.update(userRole)
+            def product = new Product()
+            product.validate()
+            controller.update(product)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.userRole == userRole
+            model.product == product
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            userRole = new UserRole(params).save(flush: true)
-            controller.update(userRole)
+            product = new Product(params).save(flush: true)
+            controller.update(product)
 
         then:"A redirect is issued to the show action"
-            userRole != null
-            response.redirectedUrl == "/userRole/show/$userRole.id"
+            product != null
+            response.redirectedUrl == "/product/show/$product.id"
             flash.message != null
     }
 
@@ -130,23 +130,23 @@ class UserRoleControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/userRole/index'
+            response.redirectedUrl == '/product/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def userRole = new UserRole(params).save(flush: true)
+            def product = new Product(params).save(flush: true)
 
         then:"It exists"
-            UserRole.count() == 1
+            Product.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(userRole)
+            controller.delete(product)
 
         then:"The instance is deleted"
-            UserRole.count() == 0
-            response.redirectedUrl == '/userRole/index'
+            Product.count() == 0
+            response.redirectedUrl == '/product/index'
             flash.message != null
     }
 }

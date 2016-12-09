@@ -48,6 +48,13 @@ class User {
 
     static mapping = {
         password column: '`password`'
+        cart display: false
+        accountExpired display: false
+        accountLocked display: false
+        passwordExpired display: false
+        enabled display: false
+        authorities display: false
+        sales display: false
     }
 
     def isAdmin( ){
