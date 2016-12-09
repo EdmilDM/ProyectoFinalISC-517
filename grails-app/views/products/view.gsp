@@ -18,6 +18,9 @@
                 <div class="box-footer">
                     Price: <strong>${product.price}</strong>
                 </div>
+                <div class="box-footer">
+                    <a style="margin-top:10px;" type="button" id="modify"  href="/products/edit/${product.id}" class="btn btn-success"><i class="fa fa-edit"></i> Modify product</a>
+                </div>
             </div>
 
             <!-- IMAGES -->
@@ -31,6 +34,7 @@
                     <label>Quantity</label>
                     <input class="form-control" min="0" step="1" type="number" placeholder="How many do you want?" id="product_qty" />
                     <button style="margin-top:10px;" type="button" id="add_to_cart" rel="${product.id}" class="btn btn-success"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+
                 </div>
             </div>
         </div>
