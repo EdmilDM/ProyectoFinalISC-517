@@ -10,7 +10,28 @@ class ApiController {
     def list_pending_orders = {
         def given = [ : ]
         given[ 'items' ] = Sale.findByGiven( false )
-        return given as JSON
+        render given as JSON
+    }
+
+    def sales = {
+        List data = [ : ]
+
+        def sales = Sale.findAll( )
+        Integer total_sales = 0;
+        Integer pending = 0;
+        Integer worked = 0;
+        for( Sale s in sales ){
+            total_sales++;
+
+            if( s.given ) worked++;
+            else pending++;
+        }
+
+        data[ 'total' ] = total
+        data[ 'pending' ] = pending
+        data[ 'worked' ] = worked
+
+        render data as JSON
     }
 
     def mark_as_given ( int id ){

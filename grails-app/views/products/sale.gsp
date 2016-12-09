@@ -9,7 +9,7 @@
     <div class="col-md-12">
         <div class="box box-solid box-primary">
             <div class="box-header">
-                Sale #${sale.id} <span class="pull-right">${sale.total}</span>
+                <h3 class="box-title">Sale #${sale.id} - NCF: ${sale.NCF}</h3> <span class="pull-right">${sale.total}</span>
             </div>
         </div>
         <div class="box-body">

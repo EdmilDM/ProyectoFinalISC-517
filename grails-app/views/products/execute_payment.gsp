@@ -7,5 +7,6 @@
 <body>
 Payment completed!
 <a href="/products/sale/${sale.id}">View sale</a>
+<script>location = "/products/sale/${sale.id}";</script>
 </body>
 </html>
