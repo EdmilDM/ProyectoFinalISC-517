@@ -57,4 +57,8 @@ class User {
         sales display: false
     }
 
+    def isAdmin( ){
+        return this.authorities.contains( Role.findByAuthority( "ROLE_ADMIN" ) )
+    }
+
 }

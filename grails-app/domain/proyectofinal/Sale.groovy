@@ -7,8 +7,11 @@ class Sale {
     Double total
     boolean given
 
-    static belongsTo = [ User ]
-    static hasMany = [ SaleItem ]
+    Date dateCreated
+    Date lastUpdated
+
+    static belongsTo = [ user: User ]
+    static hasMany = [ items: SaleItem ]
 
     static constraints = {
         total min: 0.0

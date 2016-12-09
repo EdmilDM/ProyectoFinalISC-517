@@ -7,9 +7,27 @@ $( document ).ready( function( ) {
         alert( message + ' -> ' + status );
     }
 
+    $( '.delete_cart_item').click( function( ) {
+        var id = $( this ).attr( 'rel' );
+
+        $.ajax( {
+            type: "POST",
+            url: url + '/process/delete_from_cart',
+            data: {
+                id: id
+            },
+        } ).done( function( data, textStatus, jqXHR ) {
+            displayMessage( data.message, data.status );
+
+            if( data.status == 'success' ){
+                location.reload( )
+            }
+        } );
+    } );
+
     $( "#add_to_cart").click( function( ){
-        var quantity = $( "#product_qty").val( );
-        var available = $( "#quantity_available").text();
+        var quantity = parseInt( $( "#product_qty").val( ) );
+        var available = parseInt( $( "#quantity_available").text( ) );
         var error = false;
 
         if( isNaN( quantity ) ){
