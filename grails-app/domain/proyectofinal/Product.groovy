@@ -16,3 +16,4 @@ class Product {
         price blank: false
     }
 }
+
