@@ -30,6 +30,9 @@
             <a class="btn btn-block btn-xs btn-primary" download="invoice_${sale.id}" href="/report/invoice/${sale.id}"><i class="fa fa-wpforms "></i> Print invoice</a>
             <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_STORAGE">
                 <a class="btn btn-block btn-xs btn-primary" download="storage_${sale.id}" href="/report/storage/${sale.id}"><i class="fa fa-wpforms "></i> Print Storage document</a>
+                <g:if test="${sale.given == false}">
+                    <button type="button" class="btn btn-block btn-xs btn-info" id="mark_as_given" rel="${sale.id}"><i class="fa fa-wpforms "></i> Mark as given</button>
+                </g:if>
             </sec:ifAnyGranted>
         </div>
     </div>

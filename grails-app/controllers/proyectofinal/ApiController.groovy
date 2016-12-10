@@ -9,12 +9,22 @@ class ApiController {
 
     def list_pending_orders = {
         def given = [ : ]
-        given[ 'items' ] = Sale.findByGiven( false )
+        given[ 'items' ] = []
+        def sales = Sale.findAllByGiven( false )
+        for( Sale sale : sales ){
+            given[ 'items' ] << [
+                    user: sale.user.username,
+                    total: sale.total,
+                    dateCreated: sale.dateCreated,
+                    id: sale.id
+            ]
+        }
+
         render given as JSON
     }
 
     def sales = {
-        List data = [ : ]
+        def data = [ : ]
 
         def sales = Sale.findAll( )
         Integer total_sales = 0;
@@ -27,7 +37,7 @@ class ApiController {
             else pending++;
         }
 
-        data[ 'total' ] = total
+        data[ 'total' ] = total_sales
         data[ 'pending' ] = pending
         data[ 'worked' ] = worked
 

@@ -5,34 +5,53 @@
         <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
-    <body>
-        <a href="#create-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-            </ul>
+<body>
+<div class="row">
+    <form action="/user/save" method="post">
+        <input type="hidden" name="id" value="${user.id}" />
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Complete name</label>
+                <input required class="form-control" name="name" value=""/>
+            </div>
         </div>
-        <div id="create-user" class="content scaffold-create" role="main">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${this.user}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.user}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
-            </g:hasErrors>
-            <g:form action="save">
-                <fieldset class="form">
-                    <f:all bean="user"/>
-                </fieldset>
-                <fieldset class="buttons">
-                    <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-                </fieldset>
-            </g:form>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Password*</label>
+                <input class="form-control" required name="password" value=""/>
+            </div>
         </div>
-    </body>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Email</label>
+                <input required class="form-control" name="email" value=""/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Username</label>
+                <input required class="form-control" name="username" value=""/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Address</label>
+                <textarea required class="form-control" name="address"></textarea>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Is Final Person?</label>
+                <select class="form-control" name="is_entity">
+                    <option value="1">Yes</option>
+                    <option selected value="0">No</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <button type="submit" name="save" class="btn-block btn btn-primary"><i class="fa fa-save"></i> Save</button>
+        </div>
+    </form>
+</div>
+</body>
 </html>

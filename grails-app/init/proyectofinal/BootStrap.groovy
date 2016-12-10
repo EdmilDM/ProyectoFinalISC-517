@@ -7,7 +7,7 @@ class BootStrap {
         Cart cart = new Cart( )
         cart.save( )
         User adminUser = new User(username: 'admin', cart: cart,
-                        password: '12345', email: 'admin@local', complete_name: 'Super Administrator', is_entity: true ).save( failOnError: true, flush: true  )
+                        password: '12345', email: 'admin@local', complete_name: 'Super Administrator', is_entity: true, address: 'Santiago, RD' ).save( failOnError: true, flush: true  )
 
 
         Role adminRole = new Role( authority: 'ROLE_ADMIN' )
@@ -22,7 +22,7 @@ class BootStrap {
         Cart cart1 = new Cart( )
         cart.save( )
 
-        User storageUser = new User( username: 'acmined', cart: cart1, password: '12345', email: 'acmined@gmail.com', complete_name: 'Cesar', is_entity: false ).save( failOnError: true, flush: true )
+        User storageUser = new User( username: 'acmined', cart: cart1, password: '12345', email: 'acmined@gmail.com', complete_name: 'Cesar', is_entity: false, address: 'Santiago, RD' ).save( failOnError: true, flush: true )
         storageUser.save( )
 
         UserRole.create storageUser, userRole

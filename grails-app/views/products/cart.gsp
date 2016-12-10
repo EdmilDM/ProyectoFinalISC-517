@@ -31,7 +31,7 @@
                     </exa:datatable>
                     </g:if>
                     <g:else>
-                        Your cart is empty! <a href="/products" class="btn btn-success">Go and buy some!</a>
+                        Your cart is empty! <a href="/products" class="btn btn-success"><i class="fa fa-money"></i> Go and buy some!</a>
                     </g:else>
                 </div>
                 <g:if test="${ user.cart.cartItems.size() > 0}">

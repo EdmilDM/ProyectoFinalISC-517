@@ -17,7 +17,7 @@
             <exa:customHeader name="complete_name" value="Name"/>
             <exa:customColumn name="id">
                 <g:if test="${current_user.hasRole( [ 'ROLE_ADMIN' ] )}">
-                <a href="${createLink(controller: "user", action:"view", id: it.id)}">${it.id}</a>
+                <a href="${createLink(controller: "user", action:"edit", id: it.id)}">${it.id}</a>
                 </g:if>
                 <g:else>
                     ${it.id}
@@ -25,7 +25,7 @@
             </exa:customColumn>
             <exa:customColumn name="complete_name">
                 <g:if test="${current_user.hasRole( [ 'ROLE_ADMIN' ] )}">
-                    <a href="${createLink(controller: "user", action:"view", id: it.id)}">${it.complete_name}</a>
+                    <a href="${createLink(controller: "user", action:"edit", id: it.id)}">${it.complete_name}</a>
                 </g:if>
                 <g:else>
                     ${it.complete_name}

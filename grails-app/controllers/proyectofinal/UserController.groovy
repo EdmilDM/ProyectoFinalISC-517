@@ -37,12 +37,15 @@ class UserController {
     }
 
     @Transactional
-    def save(User user) {
-        if (user == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
+    def save( ) {
+        User user = new User( )
+
+        user.complete_name = params.complete_name
+        user.address = params.address
+        user.email = params.email
+        user.is_entity = params.is_entity == "1"
+        user.password = params.password
+        user.username = params.username
 
         if (user.hasErrors()) {
             transactionStatus.setRollbackOnly()
@@ -50,20 +53,19 @@ class UserController {
             return
         }
 
+        Cart cart = new Cart( );
+        cart.save( );
+
+        user.cart = cart;
+
         user.save flush:true
+        Role userRole = Role.findByAuthority( "ROLE_USER" );
+        UserRole.create user, userRole
+
         sendMail {
             to user.email
             text "Bienvenido a MiniZONE!, sus datos de acceso son:\nUsername = " + user.username + "\t Password: " + params.password
             subject "Login details to MiniZONE"
-        }
-        println("Email? mandado")
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                redirect user
-            }
-            '*' { respond user, [status: CREATED] }
         }
     }
 
@@ -72,11 +74,17 @@ class UserController {
     }
 
     @Transactional
-    def update(User user) {
-        if (user == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
+    def update( ) {
+        User user = User.findById( params.id )
+
+        user.complete_name = params.complete_name
+        user.address = params.address
+        user.email = params.email
+        user.is_entity = params.is_entity == "1"
+        user.username = params.username
+
+        if( params.password.length() > 0 ){
+            user.password = params.password
         }
 
         if (user.hasErrors()) {
@@ -86,14 +94,6 @@ class UserController {
         }
 
         user.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                redirect user
-            }
-            '*'{ respond user, [status: OK] }
-        }
     }
 
     @Transactional

@@ -65,4 +65,17 @@ $( document ).ready( function( ) {
             }
         } );
     } );
+
+    $( '#mark_as_given' ).click( function( ) {
+        var id = $( this ).attr( 'rel' );
+        $.ajax( {
+            type: "POST",
+            url: url + '/api/mark_as_given',
+            data: {
+                'id' : id
+            }
+        } ).done( function( data, textStatus, jqXHR ) {
+            $( "#mark_as_given" ).remove();
+        } );
+    } );
 } );
