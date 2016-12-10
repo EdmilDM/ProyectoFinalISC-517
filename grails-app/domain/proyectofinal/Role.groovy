@@ -18,4 +18,9 @@ class Role implements Serializable {
     static mapping = {
         cache true
     }
+
+    @Override
+    String toString() {
+        authority
+    }
 }

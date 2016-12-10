@@ -71,4 +71,8 @@ class User {
         return false;
     }
 
+    @Override
+    String toString() {
+        username
+    }
 }
