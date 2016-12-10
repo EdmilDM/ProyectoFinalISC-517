@@ -166,6 +166,7 @@ class ProductsController {
 
         for ( UserRole ur : users ){
             System.out.println( "Email sent to:" + ur.user.email )
+
             sendMail {
                 multipart true
                 to ur.user.email

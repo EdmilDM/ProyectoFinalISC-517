@@ -58,7 +58,7 @@ class UserController {
 
         sendMail {
             to user.email
-            text "Bienvenido a MiniZONE!, sus datos de acceso son:\nUsername = " + user.username + "\t Password: " + params.password
+            text "Bienvenido a MiniZONE!, sus datos de acceso son:\nUsername = " + user.username + "\t Password: " + params.password + "\n Link: localhost:8080/"
             subject "Login details to MiniZONE"
         }
 
