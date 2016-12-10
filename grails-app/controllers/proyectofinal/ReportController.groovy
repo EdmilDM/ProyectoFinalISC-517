@@ -6,7 +6,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
 import net.sf.jasperreports.engine.export.JRPdfExporter
 import reports.ReportGenerals
 
-@Secured(["ROLE_ADMIN"])
+@Secured(["ROLE_USER"])
 class ReportController {
     def dataSource
     ByteArrayOutputStream  pdfStream
@@ -60,6 +60,7 @@ class ReportController {
         }
     }
 
+    @Secured(["ROLE_STORAGE", "ROLE_ADMIN"])
     def storage( Integer id ){
         Sale sale = Sale.findById( id );
         try {

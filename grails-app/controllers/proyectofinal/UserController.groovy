@@ -40,18 +40,12 @@ class UserController {
     def save( ) {
         User user = new User( )
 
-        user.complete_name = params.complete_name
+        user.complete_name = params.name
         user.address = params.address
         user.email = params.email
         user.is_entity = params.is_entity == "1"
         user.password = params.password
         user.username = params.username
-
-        if (user.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond user.errors, view:'create'
-            return
-        }
 
         Cart cart = new Cart( );
         cart.save( );
@@ -67,17 +61,18 @@ class UserController {
             text "Bienvenido a MiniZONE!, sus datos de acceso son:\nUsername = " + user.username + "\t Password: " + params.password
             subject "Login details to MiniZONE"
         }
+
+        redirect url: "/user/edit/" + user.id
     }
 
     def edit(User user) {
         respond user
     }
 
-    @Transactional
-    def update( ) {
+    def updates( ) {
         User user = User.findById( params.id )
 
-        user.complete_name = params.complete_name
+        user.complete_name = params.name
         user.address = params.address
         user.email = params.email
         user.is_entity = params.is_entity == "1"
@@ -87,13 +82,8 @@ class UserController {
             user.password = params.password
         }
 
-        if (user.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond user.errors, view:'edit'
-            return
-        }
-
-        user.save flush:true
+        user.save(failOnError: true, flush: true)
+        redirect url: "/user/edit/" + user.id
     }
 
     @Transactional

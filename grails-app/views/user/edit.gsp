@@ -7,7 +7,7 @@
     </head>
     <body>
         <div class="row">
-            <form action="/user/update" method="post">
+            <form action="/user/updates" method="post">
                 <input type="hidden" name="id" value="${user.id}" />
                 <div class="col-md-6">
                     <div class="form-group">
@@ -18,13 +18,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Password*</label>
-                        <input class="form-control" name="password" value=""/>
+                        <input class="form-control" type="password" name="password" value=""/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Email</label>
-                        <input required class="form-control" name="email" value="${user.email}"/>
+                        <input required class="form-control" type="email" name="email" value="${user.email}"/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -44,12 +44,12 @@
                         <label>Is Final Person?</label>
                         <select class="form-control" name="is_entity">
                         <g:if test="${user.is_entity}">
-                            <option value="1">Yes</option>
-                            <option value="0" selected>No</option>
-                        </g:if>
-                        <g:else>
                             <option value="1" selected>Yes</option>
                             <option value="0">No</option>
+                        </g:if>
+                        <g:else>
+                            <option value="1">Yes</option>
+                            <option value="0" selected>No</option>
                         </g:else>
                         </select>
                     </div>

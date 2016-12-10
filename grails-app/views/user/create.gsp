@@ -18,13 +18,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>Password*</label>
-                <input class="form-control" required name="password" value=""/>
+                <input class="form-control" type="password" required name="password" value=""/>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label>Email</label>
-                <input required class="form-control" name="email" value=""/>
+                <input required class="form-control" type="email" name="email" value=""/>
             </div>
         </div>
         <div class="col-md-6">
