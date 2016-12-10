@@ -13,7 +13,7 @@
             </div>
             <div class="box-body">
                 Transactions:
-                <g:if test="${current_user.id == user.id || current_user.isAdmin( ) }">
+                <g:if test="${current_user.id == user.id || current_user.hasRole( [ "ROLE_STORAGE", "ROLE_ADMIN" ] ) }">
                     <g:if test="${user.sales.size() > 0}">
                     <exa:datatable id="transactions_datatable" items="${user.sales}" class="table table-stripped" style="background: #FFF;"
                         hidden="lastUpdated, hasMany, user, items, belongsTo"

@@ -13,7 +13,7 @@ class UserController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     def springSecurityService
 
-
+    @Secured( [ "ROLE_STORAGE", "ROLE_ADMIN" ] )
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
 
@@ -28,14 +28,17 @@ class UserController {
         [ user: user, current_user: current_user ]
     }
 
+    @Secured( [ "ROLE_ADMIN" ] )
     def show(User user) {
         respond user
     }
 
+    @Secured( [ "ROLE_ADMIN" ] )
     def create() {
         respond new User(params)
     }
 
+    @Secured( [ "ROLE_ADMIN" ] )
     @Transactional
     def save( ) {
         User user = new User( )
@@ -65,10 +68,12 @@ class UserController {
         redirect url: "/user/edit/" + user.id
     }
 
+    @Secured( [ "ROLE_ADMIN" ] )
     def edit(User user) {
         respond user
     }
 
+    @Secured( [ "ROLE_ADMIN" ] )
     def updates( ) {
         User user = User.findById( params.id )
 
@@ -86,6 +91,7 @@ class UserController {
         redirect url: "/user/edit/" + user.id
     }
 
+    @Secured( [ "ROLE_ADMIN" ] )
     @Transactional
     def delete(User user) {
 

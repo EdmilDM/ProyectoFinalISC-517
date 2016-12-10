@@ -27,7 +27,7 @@ class NCFService {
 }
 
 class NFC {
-    protected String [ ] serieValues = ["A","B","C","D","E","F","G","H","I","J"]
+    protected String [ ] serieValues = [ 'A','B','C','D','E','F','G','H','I','J']
     Integer serie;
     protected String business_div = "01";
     protected String emition_point = "001";
