@@ -64,6 +64,9 @@ dependencies {
     testCompile "org.grails.plugins:geb"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+    compile 'com.lowagie:itext:4.2.1'
+    compile group: 'org.olap4j', name: 'olap4j', version: '1.2.0'
+    compile group: 'net.sf.jasperreports', name: 'jasperreports', version: '5.5.2'
 }
 
 bootRun {

@@ -5,12 +5,15 @@ import com.paypal.base.Constants
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import groovy.json.JsonSlurper
+import net.sf.jasperreports.engine.JasperReport
+
 
 @Secured( [ "ROLE_USER" ] )
 class ProductsController {
     def springSecurityService
     def NCFService
     def paypalService
+    def jasperService
 
     def index() {
         List<Product> products = Product.list( params )
@@ -139,19 +142,56 @@ class ProductsController {
 
         def map = new JsonSlurper().parseText(paypalPayment.toString())
 
+
         Sale sale = Sale.findById( params.sale );
         sale.paypal_transaction_id = params.paymentId;
         sale.save( );
         sendMail {
             to springSecurityService.currentUser.email
             text "test"
-            subject "FacturaPDF"
+            subject "Factura " + sale.id
         }
+
+        generate_sale_pdf( )
         System.out.println( map );
 
 //        redirect url: "localhost:8080/products/sale/" + sale.id
         [ sale: sale ]
 
+    }
+
+    def generate_sale_pdf( ) {
+        /*
+        JasperReportDef jasperReportDef = new JasperReportDef(
+                name: 'Invoice',
+                fileFormat:JasperExportFormat.PDF_FORMAT,
+                parameters: [
+                        idPedido:pedidonuevo.id,
+                        NCF: pedidonuevo.NCF,
+                        Ciudad:pedidonuevo.usuario.ciudad ,
+                        Direccion:pedidonuevo.usuario.direccion,
+                        Provincia:pedidonuevo.usuario.provincia,
+                        Telefono:pedidonuevo.usuario.telefono == null  ? "" : pedidonuevo.usuario.telefono
+                ]
+        );
+
+        File Ruta = new File("Clientes/${pedidonuevo.usuario.nombre}/${pedidonuevo.usuario.id}");
+        Ruta.mkdirs();
+        File archivo = new File("Clientes/${pedidonuevo.usuario.nombre}/${pedidonuevo.usuario.id}/${pedidonuevo.id}.pdf")
+        if(archivo.exists()) archivo.delete();
+
+        def usuario = springSecurityService.currentUser as Usuario
+        FileUtils.writeByteArrayToFile(
+                archivo,
+                jasperService.generateReport(jasperReportDef).toByteArray()
+        )
+        return jasperService.generateReport(jasperReportDef).toByteArray();*/
+        JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("/edu/pucmm/ia/groovy/reportes/PruebaReporte.jasper"));
+
+        //Mandando a ejecutar el proyecto.
+        JasperPrint print = JasperFillManager.fillReport(reporte, null);
+
+        return print;
     }
 
     def cancel_paymanet = {
