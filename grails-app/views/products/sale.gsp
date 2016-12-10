@@ -27,9 +27,9 @@
         </exa:datatable>
         </div>
         <div class="box-footer">
-            <a class="btn btn-block btn-xs btn-primary" href="/report/invoice/${sale.id}"><i class="fa fa-wpforms "></i> Print invoice</a>
+            <a class="btn btn-block btn-xs btn-primary" download="invoice_${sale.id}" href="/report/invoice/${sale.id}"><i class="fa fa-wpforms "></i> Print invoice</a>
             <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_STORAGE">
-                <a class="btn btn-block btn-xs btn-primary" href="/report/storage/${sale.id}"><i class="fa fa-wpforms "></i> Print Storage document</a>
+                <a class="btn btn-block btn-xs btn-primary" download="storage_${sale.id}" href="/report/storage/${sale.id}"><i class="fa fa-wpforms "></i> Print Storage document</a>
             </sec:ifAnyGranted>
         </div>
     </div>

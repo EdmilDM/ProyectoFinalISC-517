@@ -16,7 +16,8 @@ class UserController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond User.list(params), model:[userCount: User.count()]
+
+        respond User.list(params), model:[userCount: User.count(), current_user: springSecurityService.currentUser ]
     }
 
     def profile( String username ) {
@@ -52,8 +53,8 @@ class UserController {
         user.save flush:true
         sendMail {
             to user.email
-            text "Username = " + user.username + "\t Password: " + user.password
-            subject " Confirmation"
+            text "Bienvenido a MiniZONE!, sus datos de acceso son:\nUsername = " + user.username + "\t Password: " + params.password
+            subject "Login details to MiniZONE"
         }
         println("Email? mandado")
 

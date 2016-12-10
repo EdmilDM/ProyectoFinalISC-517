@@ -1,27 +1,42 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
-    </head>
-    <body>
-        <a href="#list-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-            </ul>
-        </div>
-        <div id="list-user" class="content scaffold-list" role="main">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <f:table collection="${userList}" />
+<head>
+    <meta name="layout" content="main" />
+    <title>Listar usuarios ~ MiniZONE</title>
+</head>
+<body>
+<div class="row">
+    <div class="col-md-12">
+        <exa:datatable id="products_datatable" items="${userList}" class="table table-stripped" style="background: #FFF;"
+                       hidden="password,hasMany,hasOne,springSecurityService,mapping,enabled,sales,cart,passwordExpired,accountExpired,accountLocked"
+                       reorder="id"
+                       add="profile">
+            <exa:customHeader name="id" value="Id"/>
+            <exa:customHeader name="is_entity" value="Final user"/>
+            <exa:customHeader name="id" value="Id"/>
+            <exa:customHeader name="complete_name" value="Name"/>
+            <exa:customColumn name="id">
+                <g:if test="${current_user.hasRole( [ 'ROLE_ADMIN' ] )}">
+                <a href="${createLink(controller: "user", action:"view", id: it.id)}">${it.id}</a>
+                </g:if>
+                <g:else>
+                    ${it.id}
+                </g:else>
+            </exa:customColumn>
+            <exa:customColumn name="complete_name">
+                <g:if test="${current_user.hasRole( [ 'ROLE_ADMIN' ] )}">
+                    <a href="${createLink(controller: "user", action:"view", id: it.id)}">${it.complete_name}</a>
+                </g:if>
+                <g:else>
+                    ${it.complete_name}
+                </g:else>
+            </exa:customColumn>
+            <exa:customColumn name="profile">
+                <a href="/user/profile/?username=${it.username}">${it.complete_name}</a>
 
-            <div class="pagination">
-                <g:paginate total="${userCount ?: 0}" />
-            </div>
-        </div>
-    </body>
+            </exa:customColumn>
+        </exa:datatable>
+    </div>
+</div>
+</body>
 </html>

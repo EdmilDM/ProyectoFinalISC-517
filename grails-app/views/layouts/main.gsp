@@ -112,20 +112,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </sec:ifAnyGranted>
                     </ul>
                 </li>
+                <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_STORAGE">
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-user"></i> <span>User Actions</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/user/index"><i class="fa fa-list"></i> List</a></li>
+
+                        <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_STORAGE">
+                        <li><a href="/user/create"><i class="fa fa-user-plus"></i> Create</a></li>
+                        </sec:ifAnyGranted>
+                    </ul>
+                </li>
+
+                </sec:ifAnyGranted>
                 <sec:ifAnyGranted roles="ROLE_ADMIN">
                     <li class="treeview">
                         <a href="/charts"><i class="fa fa-bar-chart"></i> <span>Charts</span></a>
-                    </li>
-                    <li class="treeview">
-                        <a href="#"><i class="fa fa-user"></i> <span>User Actions</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="/user/index"><i class="fa fa-list"></i> List</a></li>
-                            <li><a href="/user/create"><i class="fa fa-user-plus"></i> Create</a></li>
-                        </ul>
                     </li>
                     <li class="treeview">
                         <a href="#"><i class="fa fa-cog"></i> <span>Roles Actions</span>

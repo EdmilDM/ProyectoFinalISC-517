@@ -1,46 +1,37 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-var app = {
-    // Application Constructor
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-    },
+var url = 'http://localhost:8080'
+$( document ).ready( function( ) {
+    $.ajax( {
+        type: "POST",
+        url: url + '/api/list_pending_orders',
+    } ).done( function( data, textStatus, jqXHR ) {
+        displayMessage( data.message, data.status );
+        for( var i=0; i<data.items.length ; i++){
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        this.receivedEvent('deviceready');
-    },
+            var item = data.items[i];
+            $( "#pending_orders" ).append( "<tr id=\"order_"+item.id+"\">"+
+                "<td>"+item.user.username+"</td>"+
+                "<td>"+item.total+"</td>"+
+                "<td>"+item.DateCreated+"</td>"+
+                "<td><button class=\"mark_as_given\" rel=\""+item.id+"\"> Mark as given </button></td>"+
+                
+              "</tr>" );
+        }
 
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+        if( data.status == 'success' ){
+            location.reload( )
+        }
+    } );
+} );
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
-    }
-};
-
-app.initialize();
+$( '.mark_as_given' ).click( function( ) {
+        var id = $( this ).attr( 'rel' );
+        url: url + '/api/mark_as_given',
+        $.ajax( {
+            type: "POST",
+            data: {
+                'id' : id
+            }
+        } ).done( function( data, textStatus, jqXHR ) {
+            $("#order_" + id).remove();
+        } );
+    } );

@@ -5,15 +5,22 @@ import com.paypal.base.Constants
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import groovy.json.JsonSlurper
-import net.sf.jasperreports.engine.JasperReport
-
+import net.sf.jasperreports.engine.JRExporter
+import net.sf.jasperreports.engine.JRExporterParameter
+import net.sf.jasperreports.engine.JasperCompileManager
+import net.sf.jasperreports.engine.JasperFillManager
+import net.sf.jasperreports.engine.JasperPrint
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
+import net.sf.jasperreports.engine.export.JRPdfExporter
+import reports.ReportGenerals
 
 @Secured( [ "ROLE_USER" ] )
 class ProductsController {
     def springSecurityService
     def NCFService
     def paypalService
-    def jasperService
+    def dataSource
+    ByteArrayOutputStream  pdfStream
 
     def index() {
         List<Product> products = Product.list( params )
@@ -145,53 +152,71 @@ class ProductsController {
 
         Sale sale = Sale.findById( params.sale );
         sale.paypal_transaction_id = params.paymentId;
+
+        Role r = Role.findByAuthority( "ROLE_STORAGE" )
+        def users = UserRole.findByRole( r )
+
+        def attach = generate_sale_pdf( sale )
+
         sale.save( );
-        sendMail {
-            to springSecurityService.currentUser.email
-            text "test"
-            subject "Factura " + sale.id
+
+        for ( UserRole ur : users ){
+            System.out.println( "Email sent to:" + ur.user.email )
+            sendMail {
+                multipart true
+                to ur.user.email
+                text "You have work to do!, you must send this package to this address: " + sale.user.address
+                subject "Order # " + sale.id
+                attachBytes "Order.pdf","application/pdf", attach
+            }
         }
-
-        generate_sale_pdf( )
-        System.out.println( map );
-
 //        redirect url: "localhost:8080/products/sale/" + sale.id
         [ sale: sale ]
 
     }
 
-    def generate_sale_pdf( ) {
-        /*
-        JasperReportDef jasperReportDef = new JasperReportDef(
-                name: 'Invoice',
-                fileFormat:JasperExportFormat.PDF_FORMAT,
-                parameters: [
-                        idPedido:pedidonuevo.id,
-                        NCF: pedidonuevo.NCF,
-                        Ciudad:pedidonuevo.usuario.ciudad ,
-                        Direccion:pedidonuevo.usuario.direccion,
-                        Provincia:pedidonuevo.usuario.provincia,
-                        Telefono:pedidonuevo.usuario.telefono == null  ? "" : pedidonuevo.usuario.telefono
-                ]
-        );
+    def generate_sale_pdf( Sale sale ) {
+        try {
+            String reportName, jrxmlFileName, dotJasperFileName
+            jrxmlFileName = "storage"
+            reportName = grailsApplication.mainContext.getResource('reports/' + jrxmlFileName + '.jrxml').file.getAbsoluteFile()
+            dotJasperFileName = grailsApplication.mainContext.getResource('reports/' + jrxmlFileName + '.jasper').file.getAbsoluteFile()
 
-        File Ruta = new File("Clientes/${pedidonuevo.usuario.nombre}/${pedidonuevo.usuario.id}");
-        Ruta.mkdirs();
-        File archivo = new File("Clientes/${pedidonuevo.usuario.nombre}/${pedidonuevo.usuario.id}/${pedidonuevo.id}.pdf")
-        if(archivo.exists()) archivo.delete();
+            // Report parameter
 
-        def usuario = springSecurityService.currentUser as Usuario
-        FileUtils.writeByteArrayToFile(
-                archivo,
-                jasperService.generateReport(jasperReportDef).toByteArray()
-        )
-        return jasperService.generateReport(jasperReportDef).toByteArray();*/
-        JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("/edu/pucmm/ia/groovy/reportes/PruebaReporte.jasper"));
+            def dataList = ReportGenerals.getInvoceItems( sale )
+            print dataList
+            JRBeanCollectionDataSource beanColDataSource = new
+                    JRBeanCollectionDataSource(dataList, false);
 
-        //Mandando a ejecutar el proyecto.
-        JasperPrint print = JasperFillManager.fillReport(reporte, null);
+            Map<String, Object> reportParam = new HashMap<String, Object>()
 
-        return print;
+            reportParam.put("customerName", sale.user.complete_name )
+            reportParam.put("customerEmail", sale.user.email)
+            reportParam.put("invoiceNumber", sale.id)
+            reportParam.put("invoiceAmount",sale.total)
+            reportParam.put("invoiceStatus",sale.paypal_transaction_id == "" ? "Not Paid" : "Paid" )
+            reportParam.put("invoiceDate", sale.dateCreated)
+            reportParam.put("NCF", sale.NCF)
+            // compiles jrxml
+            JasperCompileManager.compileReportToFile(reportName);
+            // fills compiled report with parameters and a connection
+            JasperPrint print = JasperFillManager.fillReport(dotJasperFileName, reportParam, beanColDataSource);
+
+            pdfStream = new ByteArrayOutputStream();
+
+            // exports report to pdf
+            JRExporter exporter = new JRPdfExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, pdfStream); // your output goes here
+
+            exporter.exportReport();
+            //println 'pdfStream = '+pdfStream.size()
+            return pdfStream.toByteArray( )
+
+        } catch (Exception e) {
+            throw new RuntimeException("It's not possible to generate the pdf report.", e);
+        }
     }
 
     def cancel_paymanet = {

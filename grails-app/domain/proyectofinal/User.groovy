@@ -6,6 +6,7 @@ class User {
     String email
     String complete_name
     boolean is_entity
+    String address
 
     boolean accountExpired
     boolean accountLocked
