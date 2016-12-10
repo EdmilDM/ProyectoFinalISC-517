@@ -49,6 +49,13 @@ class ApiController {
 
         def result= [ : ]
 
+        if( sale == null ){
+            result[ 'status' ] = 'error';
+            result[ 'message' ] = "The sale doesn't exists!";
+            render result as JSON
+        }
+
+
         sale.given = true;
 
         if( !sale.save( ) ){

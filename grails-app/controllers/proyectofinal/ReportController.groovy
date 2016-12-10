@@ -17,6 +17,10 @@ class ReportController {
 
     def invoice( Integer id ){
         Sale sale = Sale.findById( id );
+        if( sale == null ){
+            render view: "/notFound"
+            return
+        }
         try {
             String reportName, jrxmlFileName, dotJasperFileName
             jrxmlFileName = "invoice"
@@ -63,6 +67,10 @@ class ReportController {
     @Secured(["ROLE_STORAGE", "ROLE_ADMIN"])
     def storage( Integer id ){
         Sale sale = Sale.findById( id );
+        if( sale == null ){
+            render view: "/notFound"
+            return
+        }
         try {
             String reportName, jrxmlFileName, dotJasperFileName
             jrxmlFileName = "storage"

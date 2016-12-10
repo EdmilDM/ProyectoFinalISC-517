@@ -38,6 +38,10 @@ class ProductsController {
 
     def view( ){
         Product product = Product.get( params.id )
+        if( product == null ){
+            render view: "/notFound"
+            return
+        }
         [ product: product ]
     }
 
@@ -176,6 +180,10 @@ class ProductsController {
     }
 
     def generate_sale_pdf( Sale sale ) {
+        if( sale == null ){
+            render view: "/notFound"
+            return
+        }
         try {
             String reportName, jrxmlFileName, dotJasperFileName
             jrxmlFileName = "storage"
@@ -225,6 +233,10 @@ class ProductsController {
 
     def sale = {
         Sale sale = Sale.findById( params.id )
+        if( sale == null ){
+            render view: "/notFound"
+            return
+        }
         [ sale: sale ]
     }
 
